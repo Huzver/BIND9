@@ -1,0 +1,41 @@
+options {
+	// Рабочая дирректория для DNS
+	directory "/var/cache/bind";
+	dnssec-enable no;
+	dnssec-validation no;
+
+	// Для поддержки спецификации RFC1035
+	auth-nxdomain no;
+
+	// Не будем работать по IPV6 адресам
+	listen-on-v6 {
+		none;
+	};
+
+	// Будем прослушивать DNS запросы только на указанных IPV4 адресах
+	listen-on {
+		127.0.0.1;
+		192.168.88.22;
+	};
+
+	// Не передавать информацию о зоне во вторичный DNS
+	allow-transfer {
+		none;
+	};
+
+	// Принимаем запросы только для внутренней сети
+	allow-query {
+		any;
+	};
+
+	// Разрешать рекурсивные запросы локальным хостам
+	allow-recursion {
+		loc;
+		lan1;
+		lan2;
+	};
+
+	// Не выводить версию BIND
+	version none;	
+};
+

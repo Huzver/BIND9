@@ -1,0 +1,85 @@
+// Управление доменом gregory-gost.ru
+// ----------------------------------
+
+// Добавляем вид для сети за роутером hAP ac
+view "internal_1" {
+	// Разрешаем отвечать только для сети lan1
+	match-clients {
+		loc;
+		lan1;
+	};
+	allow-query {
+		loc;
+		lan1;
+	};
+
+	// Наш сервер рекурсивен для внутренних клиентов, сам будет узнавать адрес для клиента
+	recursion yes;
+
+	// Куда отправлять запросы, если сервер не может их определить
+	forwarders {
+		192.168.88.1;
+	};
+
+	// Подключаем файл с базовыми зонами
+	// zone "."
+	// zone "localhost"
+	// zone "127.in-addr.arpa"
+	// zone "0.in-addr.arpa"
+	// zone "255.in-addr.arpa"
+	include "/etc/bind/named.conf.default-zones";
+
+	// Добавляем зону прямого просмотра
+	zone "gregory-gost.ru" {
+		type master;
+		file "/etc/bind/zone/db.gregory-gost.ru";
+	};
+
+	// Добавляем зону обратного просмотра
+	zone "88.168.192.in-addr.arpa" {
+		type master;
+		file "/etc/bind/zone/db.gregory-gost.ru.inverse";
+	};
+};
+
+// Добавляем вид для сети за роутером hEX
+view "internal_2" {
+	// Разрешаем отвечать только для сети lan2
+	match-clients {
+		loc;
+		lan2;
+	};
+	allow-query {
+		loc;
+		lan2;
+	};
+
+	// Наш сервер рекурсивен для внутренних клиентов, сам будет узнавать адрес для клиента
+	recursion yes;
+
+	// Куда отправлять запросы, если сервер не может их определить
+	forwarders {
+		192.168.88.2;
+	};
+
+	// Подключаем файл с базовыми зонами
+	// zone "."
+	// zone "localhost"
+	// zone "127.in-addr.arpa"
+	// zone "0.in-addr.arpa"
+	// zone "255.in-addr.arpa"
+	include "/etc/bind/named.conf.default-zones";
+
+	// Добавляем зону прямого просмотра
+	zone "gregory-gost.ru" {
+		type master;
+		file "/etc/bind/zone/db.gregory-gost.ru";
+	};
+
+	// Добавляем зону обратного просмотра
+	zone "88.168.192.in-addr.arpa" {
+		type master;
+		file "/etc/bind/zone/db.gregory-gost.ru.inverse";
+	};
+};
+
