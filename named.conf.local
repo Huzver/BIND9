@@ -12,6 +12,12 @@ view "internal_1" {
 		loc;
 		lan1;
 	};
+	allow-transfer {
+		trusted-dns;
+	};
+	allow-update {
+		none;
+	};
 
 	// Наш сервер рекурсивен для внутренних клиентов, сам будет узнавать адрес для клиента
 	recursion yes;
@@ -52,6 +58,12 @@ view "internal_2" {
 	allow-query {
 		loc;
 		lan2;
+	};
+	allow-transfer {
+		trusted-dns;
+	};
+	allow-update {
+		none;
 	};
 
 	// Наш сервер рекурсивен для внутренних клиентов, сам будет узнавать адрес для клиента

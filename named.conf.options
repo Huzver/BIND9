@@ -4,6 +4,12 @@ options {
 	dnssec-enable no;
 	dnssec-validation no;
 
+	//
+	dump-file "/var/log/bind/bind.dump";
+
+	//
+	statistics-file "/var/log/bind/bind.stats";
+
 	// Для поддержки спецификации RFC1035
 	auth-nxdomain no;
 
@@ -11,6 +17,9 @@ options {
 	listen-on-v6 {
 		none;
 	};
+
+	//
+	port 53;
 
 	// Будем прослушивать DNS запросы только на указанных IPV4 адресах
 	listen-on {
